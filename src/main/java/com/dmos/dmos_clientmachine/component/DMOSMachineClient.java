@@ -104,21 +104,4 @@ public class DMOSMachineClient {
         log.info("正在发送心跳");
         ChannelUtil.heartbeat(clientContext.getParent());
     }
-    @Scheduled(fixedRate = 10000)
-    public void report(){
-        log.info("正在报告状态");
-        ClientReportDTO reportDTO = new ClientReportDTO();
-        reportDTO.setId(clientContext.getId());
-        reportDTO.setTimestamp(System.currentTimeMillis() / 1000L);
-        double cpu_percent = 0.5 + Math.random() / 5;
-        double ram_percent = 0.5 + Math.random() / 5;
-        double disk_percent = 0.4 + Math.random() / 4;
-        reportDTO.setCpu(new CPU(cpu_percent, 12 * cpu_percent, 12));
-        reportDTO.setRam(new Ram(ram_percent, 32 * ram_percent, 32));
-        reportDTO.setStorage(new Storage(disk_percent, 512 * disk_percent, 512));
-        Message message = new Message();
-        message.setType(MessageType.CLIENT_REPORT);
-        message.setData(ParseUtil.encode(reportDTO, false));
-        clientContext.sendWithoutFlush(message);
-    }
 }

@@ -1,6 +1,6 @@
 {
   "name": "",
-  "interval": 10000,
+  "interval": 7000,
   "localToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTEsImV4cCI6MTY3MDk0NzIwMH0.Nl7qOicd4UKkZ5IsamdUg70ngXP6CMQfExYYar9eoRg",
   "socketIP": "127.0.0.1:8082",
   "register": "127.0.0.1:8081",

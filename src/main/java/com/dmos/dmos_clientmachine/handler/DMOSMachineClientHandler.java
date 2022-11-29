@@ -1,10 +1,14 @@
 package com.dmos.dmos_clientmachine.handler;
 
+import com.dmos.dmos_client.DMOSClient;
 import com.dmos.dmos_client.DMOSClientContext;
 import com.dmos.dmos_clientmachine.bean.SpringUtil;
+import com.dmos.dmos_clientmachine.util.DMOSClientConfig;
+import com.dmos.dmos_common.config.DMOSConfig;
 import com.dmos.dmos_common.data.ConfigDTO;
 import com.dmos.dmos_common.message.Message;
 import com.dmos.dmos_common.message.MessageType;
+import com.dmos.dmos_common.util.ConfigUtil;
 import com.dmos.dmos_common.util.ParseUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -13,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DMOSMachineClientHandler extends ChannelInboundHandlerAdapter {
     private final DMOSClientContext clientContext = SpringUtil.getBean(DMOSClientContext.class);
+    private final DMOSClientConfig dmosConfig = SpringUtil.getBean(DMOSClientConfig.class);
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.info("父节点通道已建立: {}", ctx.channel().id().asLongText());
@@ -33,6 +38,12 @@ public class DMOSMachineClientHandler extends ChannelInboundHandlerAdapter {
             if(message.getType() == MessageType.CONFIG){
                 ConfigDTO configDTO = ParseUtil.decode(message.getData(), ConfigDTO.class);
                 int client = configDTO.getId();
+//                log.info(configDTO.toString());
+                if(configDTO.getIp() != null && !configDTO.getIp().isEmpty())
+                    dmosConfig.setLocalhost(configDTO.getIp());
+                if(configDTO.getInterval() > 1000)
+                    dmosConfig.setInterval(configDTO.getInterval());
+                ConfigUtil.save(dmosConfig, "config.json");
             }
             else if(message.getType() == MessageType.HEARTBEAT){
 
