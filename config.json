@@ -1,9 +1,0 @@
-{
-  "name": "",
-  "interval": 10000,
-  "localToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTgsImV4cCI6MTY3MTAzMzYwMH0.kcSKPaYulfvixaanX37iGiGbl0KcPsbP5gtrFXptTXE",
-  "socketIP": "127.0.0.1",
-  "register": "127.0.0.1",
-  "storage": "127.0.0.1",
-  "localhost": "127.0.0.1"
-}
