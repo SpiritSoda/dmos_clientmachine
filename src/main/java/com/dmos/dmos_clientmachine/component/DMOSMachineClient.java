@@ -49,7 +49,7 @@ public class DMOSMachineClient {
                 while(true){
                     try {
                         String token = dmosConfig.getLocalToken();
-                        String url = dmosConfig.getRegister();
+                        String url = dmosConfig.getRegister() + ":" + Port.REGISTER_HTTP_PORT;
                         HttpHeaders headers = new HttpHeaders();
                         headers.add("token", token);
                         DMOSResponse response = httpUtil.post(url, "/register/token", headers, new DMOSRequest(), restTemplate);
@@ -87,7 +87,7 @@ public class DMOSMachineClient {
                         continue;
                     }
 
-                    DMOSClient client = new com.dmos.dmos_client.DMOSClient(new InetSocketAddress("127.0.0.1", Port.SOCKET_CHANNEL_PORT), new DMOSMachineClientHandler());
+                    DMOSClient client = new com.dmos.dmos_client.DMOSClient(new InetSocketAddress(dmosConfig.getSocketIP(), Port.SOCKET_CHANNEL_PORT), new DMOSMachineClientHandler());
                     client.connect();
 
                     try {
